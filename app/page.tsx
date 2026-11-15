@@ -1,3 +1,5 @@
+import { StoreInventory } from "@/types/inventory";
+
 async function getInventory() {
   const res = await fetch(
     "https://dfw-homeview-tracker.chris25tof.workers.dev/api/inventory",
@@ -5,6 +7,10 @@ async function getInventory() {
       cache: "no-store",
     }
   );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch inventory");
+  }
 
   return res.json();
 }
@@ -18,6 +24,7 @@ export default async function Home() {
         maxWidth: "1100px",
         margin: "0 auto",
         padding: "2rem",
+        fontFamily: "Arial, sans-serif",
       }}
     >
       <h1>DFW HomeView Tracker</h1>
@@ -27,12 +34,11 @@ export default async function Home() {
       </p>
 
       <p>
-        Last Updated:
-        {" "}
+        Last Updated:{" "}
         {new Date(data.updatedAt).toLocaleString()}
       </p>
 
-      {data.stores.map((store: any) => (
+      {data.stores.map((store: StoreInventory) => (
         <div
           key={store.store}
           style={{
@@ -45,18 +51,18 @@ export default async function Home() {
           <h2>{store.store}</h2>
 
           <p>
-            Silver:
-            {" "}
-            {store.silver ? "✅ In Stock" : "❌ Out of Stock"}
+            Silver:{" "}
+            <span
+              style={{
+                color: store.silver ? "green" : "red",
+                fontWeight: "bold",
+              }}
+            >
+              {store.silver
+                ? "✅ In Stock"
+                : "❌ Out of Stock"}
+            </span>
           </p>
 
           <p>
-            Space Gray:
-            {" "}
-            {store.spaceGray ? "✅ In Stock" : "❌ Out of Stock"}
-          </p>
-        </div>
-      ))}
-    </main>
-  );
-}
+            Space
