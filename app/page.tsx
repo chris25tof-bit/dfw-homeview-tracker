@@ -1,35 +1,40 @@
-const stores = [
-  "Southlake Town Square",
-  "NorthPark Center",
-  "Stonebriar Centre",
-  "Galleria Dallas",
-  "University Park Village",
-];
+async function getInventory() {
+  const res = await fetch(
+    "https://dfw-homeview-tracker.chris25tof.workers.dev/api/inventory",
+    {
+      cache: "no-store",
+    }
+  );
 
-export default function Home() {
+  return res.json();
+}
+
+export default async function Home() {
+  const data = await getInventory();
+
   return (
     <main
       style={{
         maxWidth: "1100px",
         margin: "0 auto",
         padding: "2rem",
-        fontFamily: "Arial, sans-serif",
       }}
     >
       <h1>DFW HomeView Tracker</h1>
 
       <p>
         Monitoring Apple HomeView Standard Tabletop ($299)
-        in Silver and Space Gray.
       </p>
 
       <p>
-        Last Updated: {new Date().toLocaleString()}
+        Last Updated:
+        {" "}
+        {new Date(data.updatedAt).toLocaleString()}
       </p>
 
-      {stores.map((store) => (
+      {data.stores.map((store: any) => (
         <div
-          key={store}
+          key={store.store}
           style={{
             border: "1px solid #ddd",
             borderRadius: "12px",
@@ -37,33 +42,19 @@ export default function Home() {
             marginTop: "20px",
           }}
         >
-          <h2>{store}</h2>
+          <h2>{store.store}</h2>
 
-          <div>
+          <p>
             Silver:
-            <span
-              style={{
-                color: "#dc2626",
-                fontWeight: "bold",
-                marginLeft: "10px",
-              }}
-            >
-              Out of Stock
-            </span>
-          </div>
+            {" "}
+            {store.silver ? "✅ In Stock" : "❌ Out of Stock"}
+          </p>
 
-          <div>
+          <p>
             Space Gray:
-            <span
-              style={{
-                color: "#dc2626",
-                fontWeight: "bold",
-                marginLeft: "10px",
-              }}
-            >
-              Out of Stock
-            </span>
-          </div>
+            {" "}
+            {store.spaceGray ? "✅ In Stock" : "❌ Out of Stock"}
+          </p>
         </div>
       ))}
     </main>
