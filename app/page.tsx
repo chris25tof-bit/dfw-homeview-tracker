@@ -1,7 +1,7 @@
-import { getAppleInventory } from "@/lib/apple";
+import { getInventoryData } from "@/lib/apple";
 
 export default async function Home() {
-  const stores = await getAppleInventory();
+  const data = await getInventoryData();
 
   return (
     <main
@@ -19,10 +19,11 @@ export default async function Home() {
       </p>
 
       <p>
-        Last Updated: {new Date().toLocaleString()}
+        Last Updated:{" "}
+        {new Date(data.updatedAt).toLocaleString()}
       </p>
 
-      {stores.map((store) => (
+      {data.stores.map((store) => (
         <div
           key={store.store}
           style={{
@@ -35,11 +36,17 @@ export default async function Home() {
           <h2>{store.store}</h2>
 
           <p>
-            Silver: {store.silver ? "✅ In Stock" : "❌ Out of Stock"}
+            Silver:{" "}
+            {store.silver
+              ? "✅ In Stock"
+              : "❌ Out of Stock"}
           </p>
 
           <p>
-            Space Gray: {store.spaceGray ? "✅ In Stock" : "❌ Out of Stock"}
+            Space Gray:{" "}
+            {store.spaceGray
+              ? "✅ In Stock"
+              : "❌ Out of Stock"}
           </p>
         </div>
       ))}
