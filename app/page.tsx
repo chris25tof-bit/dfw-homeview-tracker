@@ -1,12 +1,9 @@
 import { StoreInventory } from "@/types/inventory";
 
 async function getInventory() {
-  const res = await fetch(
-    "http://localhost:3000/api/inventory",
-    {
-      cache: "no-store",
-    }
-  );
+  const res = await fetch("http://localhost:3000/api/inventory", {
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     throw new Error("Failed to fetch inventory");
@@ -34,7 +31,7 @@ export default async function Home() {
       </p>
 
       <p>
-        Last Updated{" "}
+        Last Updated:{" "}
         {new Date(data.updatedAt).toLocaleString()}
       </p>
 
@@ -52,30 +49,16 @@ export default async function Home() {
 
           <p>
             Silver:{" "}
-            <span
-              style={{
-                color: store.silver ? "green" : "red",
-                fontWeight: "bold",
-              }}
-            >
-              {store.silver
-                ? "✅ In Stock"
-                : "❌ Out of Stock"}
-            </span>
+            {store.silver
+              ? "✅ In Stock"
+              : "❌ Out of Stock"}
           </p>
 
           <p>
             Space Gray:{" "}
-            <span
-              style={{
-                color: store.spaceGray ? "green" : "red",
-                fontWeight: "bold",
-              }}
-            >
-              {store.spaceGray
-                ? "✅ In Stock"
-                : "❌ Out of Stock"}
-            </span>
+            {store.spaceGray
+              ? "✅ In Stock"
+              : "❌ Out of Stock"}
           </p>
         </div>
       ))}
