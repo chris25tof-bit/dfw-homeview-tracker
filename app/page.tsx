@@ -3,6 +3,14 @@ import { getInventoryData, PRODUCTS } from "@/lib/apple";
 export default async function Home() {
   const data = await getInventoryData();
 
+  const silverCount = data.stores.filter(
+    (store) => store.silver
+  ).length;
+
+  const spaceGrayCount = data.stores.filter(
+    (store) => store.spaceGray
+  ).length;
+
   return (
     <main
       style={{
@@ -25,10 +33,31 @@ export default async function Home() {
 
       <div
         style={{
-          marginBottom: "2rem",
-          padding: "1rem",
           border: "1px solid #ddd",
           borderRadius: "12px",
+          padding: "20px",
+          marginTop: "20px",
+          marginBottom: "20px",
+          backgroundColor: "#f8f9fa",
+        }}
+      >
+        <h2>Status Summary</h2>
+
+        <p>
+          Silver Available In: {silverCount} store(s)
+        </p>
+
+        <p>
+          Space Gray Available In: {spaceGrayCount} store(s)
+        </p>
+      </div>
+
+      <div
+        style={{
+          border: "1px solid #ddd",
+          borderRadius: "12px",
+          padding: "20px",
+          marginBottom: "20px",
         }}
       >
         <h2>Products</h2>
