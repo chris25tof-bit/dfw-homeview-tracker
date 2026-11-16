@@ -1,4 +1,4 @@
-import { getInventoryData } from "@/lib/apple";
+import { getInventoryData, PRODUCTS } from "@/lib/apple";
 
 export default async function Home() {
   const data = await getInventoryData();
@@ -22,6 +22,37 @@ export default async function Home() {
         Last Updated:{" "}
         {new Date(data.updatedAt).toLocaleString()}
       </p>
+
+      <div
+        style={{
+          marginBottom: "2rem",
+          padding: "1rem",
+          border: "1px solid #ddd",
+          borderRadius: "12px",
+        }}
+      >
+        <h2>Products</h2>
+
+        <p>
+          <a
+            href={PRODUCTS.silver.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Apple HomeView Silver
+          </a>
+        </p>
+
+        <p>
+          <a
+            href={PRODUCTS.spaceGray.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Apple HomeView Space Gray
+          </a>
+        </p>
+      </div>
 
       {data.stores.map((store) => (
         <div
