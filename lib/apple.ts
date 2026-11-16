@@ -8,11 +8,13 @@ export interface InventoryResponse {
 
 export const PRODUCTS = {
   silver: {
+    id: "silver",
     name: "Apple HomeView Silver",
     url: "https://www.apple.com/shop/buy-home/apple-homeview/apple-homeview-silver",
   },
 
   spaceGray: {
+    id: "space-gray",
     name: "Apple HomeView Space Gray",
     url: "https://www.apple.com/shop/buy-home/apple-homeview/apple-homeview-space-gray",
   },
@@ -20,7 +22,7 @@ export const PRODUCTS = {
 
 export async function getAppleInventory(): Promise<StoreInventory[]> {
   return DFW_STORES.map((store) => ({
-    store,
+    store: store.name,
     silver: false,
     spaceGray: false,
   }));
