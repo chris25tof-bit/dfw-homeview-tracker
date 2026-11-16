@@ -23,25 +23,31 @@ export const PRODUCTS = {
 async function checkStoreInventory(
   storeId: string
 ): Promise<StoreInventory> {
-  // Placeholder for future Apple lookup
-
   const store = DFW_STORES.find(
     (s) => s.id === storeId
   );
 
+  //
+  // Future Apple inventory lookup goes here
+  //
+  const silverAvailable = false;
+  const spaceGrayAvailable = false;
+
   return {
     store: store?.name ?? storeId,
-    silver: false,
-    spaceGray: false,
+    silver: silverAvailable,
+    spaceGray: spaceGrayAvailable,
   };
 }
 
 export async function getAppleInventory(): Promise<StoreInventory[]> {
-  return Promise.all(
+  const inventory = await Promise.all(
     DFW_STORES.map((store) =>
       checkStoreInventory(store.id)
     )
   );
+
+  return inventory;
 }
 
 export async function getInventoryData(): Promise<InventoryResponse> {
