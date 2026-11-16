@@ -2,7 +2,7 @@ import { StoreInventory } from "@/types/inventory";
 
 async function getInventory() {
   const res = await fetch(
-    "https://dfw-homeview-tracker.chris25tof.workers.dev/api/inventory",
+    "http://localhost:3000/api/inventory",
     {
       cache: "no-store",
     }
@@ -34,7 +34,7 @@ export default async function Home() {
       </p>
 
       <p>
-        Last Updated:{" "}
+        Last Updated{" "}
         {new Date(data.updatedAt).toLocaleString()}
       </p>
 
@@ -65,4 +65,20 @@ export default async function Home() {
           </p>
 
           <p>
-            Space
+            Space Gray:{" "}
+            <span
+              style={{
+                color: store.spaceGray ? "green" : "red",
+                fontWeight: "bold",
+              }}
+            >
+              {store.spaceGray
+                ? "✅ In Stock"
+                : "❌ Out of Stock"}
+            </span>
+          </p>
+        </div>
+      ))}
+    </main>
+  );
+}
