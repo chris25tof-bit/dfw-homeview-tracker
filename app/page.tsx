@@ -1,19 +1,7 @@
-import { StoreInventory } from "@/types/inventory";
-
-async function getInventory() {
-  const res = await fetch("http://localhost:3000/api/inventory", {
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch inventory");
-  }
-
-  return res.json();
-}
+import { getAppleInventory } from "@/lib/apple";
 
 export default async function Home() {
-  const data = await getInventory();
+  const stores = await getAppleInventory();
 
   return (
     <main
@@ -31,11 +19,10 @@ export default async function Home() {
       </p>
 
       <p>
-        Last Updated:{" "}
-        {new Date(data.updatedAt).toLocaleString()}
+        Last Updated: {new Date().toLocaleString()}
       </p>
 
-      {data.stores.map((store: StoreInventory) => (
+      {stores.map((store) => (
         <div
           key={store.store}
           style={{
@@ -48,17 +35,11 @@ export default async function Home() {
           <h2>{store.store}</h2>
 
           <p>
-            Silver:{" "}
-            {store.silver
-              ? "✅ In Stock"
-              : "❌ Out of Stock"}
+            Silver: {store.silver ? "✅ In Stock" : "❌ Out of Stock"}
           </p>
 
           <p>
-            Space Gray:{" "}
-            {store.spaceGray
-              ? "✅ In Stock"
-              : "❌ Out of Stock"}
+            Space Gray: {store.spaceGray ? "✅ In Stock" : "❌ Out of Stock"}
           </p>
         </div>
       ))}
