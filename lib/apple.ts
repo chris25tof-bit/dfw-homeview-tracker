@@ -6,6 +6,18 @@ export interface InventoryResponse {
   stores: StoreInventory[];
 }
 
+export const PRODUCTS = {
+  silver: {
+    name: "Apple HomeView Silver",
+    url: "https://www.apple.com/shop/buy-home/apple-homeview/apple-homeview-silver",
+  },
+
+  spaceGray: {
+    name: "Apple HomeView Space Gray",
+    url: "https://www.apple.com/shop/buy-home/apple-homeview/apple-homeview-space-gray",
+  },
+};
+
 export async function getAppleInventory(): Promise<StoreInventory[]> {
   return DFW_STORES.map((store) => ({
     store,
