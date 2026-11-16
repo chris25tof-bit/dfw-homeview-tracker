@@ -20,12 +20,28 @@ export const PRODUCTS = {
   },
 };
 
-export async function getAppleInventory(): Promise<StoreInventory[]> {
-  return DFW_STORES.map((store) => ({
-    store: store.name,
+async function checkStoreInventory(
+  storeId: string
+): Promise<StoreInventory> {
+  // Placeholder for future Apple lookup
+
+  const store = DFW_STORES.find(
+    (s) => s.id === storeId
+  );
+
+  return {
+    store: store?.name ?? storeId,
     silver: false,
     spaceGray: false,
-  }));
+  };
+}
+
+export async function getAppleInventory(): Promise<StoreInventory[]> {
+  return Promise.all(
+    DFW_STORES.map((store) =>
+      checkStoreInventory(store.id)
+    )
+  );
 }
 
 export async function getInventoryData(): Promise<InventoryResponse> {
