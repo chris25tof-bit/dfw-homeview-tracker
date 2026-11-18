@@ -9,12 +9,14 @@ export interface InventoryResponse {
 export const PRODUCTS = {
   silver: {
     id: "silver",
+    sku: "MDH14LL/A",
     name: "Apple HomeView Silver",
     url: "https://www.apple.com/shop/buy-home/apple-homeview/apple-homeview-silver",
   },
 
   spaceGray: {
     id: "space-gray",
+    sku: "MDH24LL/A",
     name: "Apple HomeView Space Gray",
     url: "https://www.apple.com/shop/buy-home/apple-homeview/apple-homeview-space-gray",
   },
@@ -27,27 +29,19 @@ async function checkStoreInventory(
     (s) => s.id === storeId
   );
 
-  //
-  // Future Apple inventory lookup goes here
-  //
-  const silverAvailable = false;
-  const spaceGrayAvailable = false;
-
   return {
     store: store?.name ?? storeId,
-    silver: silverAvailable,
-    spaceGray: spaceGrayAvailable,
+    silver: false,
+    spaceGray: false,
   };
 }
 
 export async function getAppleInventory(): Promise<StoreInventory[]> {
-  const inventory = await Promise.all(
+  return Promise.all(
     DFW_STORES.map((store) =>
       checkStoreInventory(store.id)
     )
   );
-
-  return inventory;
 }
 
 export async function getInventoryData(): Promise<InventoryResponse> {
