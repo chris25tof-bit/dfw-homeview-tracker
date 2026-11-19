@@ -43,9 +43,14 @@ async function checkProduct(
     );
 
     if (!response.ok) {
+      const body = await response.text();
+
       return {
         status: "unknown",
-        message: `Apple returned ${response.status}`,
+        message: `Apple ${response.status}: ${body.slice(
+          0,
+          50
+        )}`,
       };
     }
 
