@@ -37,6 +37,11 @@ async function checkProduct(
       {
         headers: {
           Accept: "application/json",
+          "User-Agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36",
+          Referer:
+            "https://www.apple.com/shop/buy-home/apple-homeview/apple-homeview-silver",
+          Origin: "https://www.apple.com",
         },
         cache: "no-store",
       }
@@ -49,7 +54,7 @@ async function checkProduct(
         status: "unknown",
         message: `Apple ${response.status}: ${body.slice(
           0,
-          50
+          100
         )}`,
       };
     }
