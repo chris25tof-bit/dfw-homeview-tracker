@@ -19,6 +19,14 @@ function renderStatus(status: string) {
 export default async function Home() {
   const data = await getInventoryData();
 
+  const silverAvailable = data.stores.filter(
+    (store) => store.silver.status === "available-to-order"
+  ).length;
+
+  const spaceGrayAvailable = data.stores.filter(
+    (store) => store.spaceGray.status === "available-to-order"
+  ).length;
+
   return (
     <main
       style={{
@@ -51,7 +59,17 @@ export default async function Home() {
       >
         <h2>Status Summary</h2>
 
-        <p>Live inventory integration coming next.</p>
+        <p>
+          Silver Available to Order:
+          {" "}
+          {silverAvailable}
+        </p>
+
+        <p>
+          Space Gray Available to Order:
+          {" "}
+          {spaceGrayAvailable}
+        </p>
       </div>
 
       <div
