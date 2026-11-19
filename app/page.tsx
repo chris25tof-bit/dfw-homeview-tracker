@@ -1,15 +1,23 @@
 import { getInventoryData, PRODUCTS } from "@/lib/apple";
 
+function renderStatus(status: string) {
+  switch (status) {
+    case "in-stock":
+      return "🟢 In Stock";
+
+    case "available-to-order":
+      return "🟡 Available to Order";
+
+    case "unavailable":
+      return "🔴 Unavailable";
+
+    default:
+      return "⚪ Unknown";
+  }
+}
+
 export default async function Home() {
   const data = await getInventoryData();
-
-  const silverCount = data.stores.filter(
-    (store) => store.silver
-  ).length;
-
-  const spaceGrayCount = data.stores.filter(
-    (store) => store.spaceGray
-  ).length;
 
   return (
     <main
@@ -43,13 +51,7 @@ export default async function Home() {
       >
         <h2>Status Summary</h2>
 
-        <p>
-          Silver Available In: {silverCount} store(s)
-        </p>
-
-        <p>
-          Space Gray Available In: {spaceGrayCount} store(s)
-        </p>
+        <p>Live inventory integration coming next.</p>
       </div>
 
       <div
@@ -96,17 +98,15 @@ export default async function Home() {
           <h2>{store.store}</h2>
 
           <p>
-            Silver:{" "}
-            {store.silver
-              ? "✅ In Stock"
-              : "❌ Out of Stock"}
+            Silver: {renderStatus(store.silver.status)}
+            <br />
+            <small>{store.silver.message}</small>
           </p>
 
           <p>
-            Space Gray:{" "}
-            {store.spaceGray
-              ? "✅ In Stock"
-              : "❌ Out of Stock"}
+            Space Gray: {renderStatus(store.spaceGray.status)}
+            <br />
+            <small>{store.spaceGray.message}</small>
           </p>
         </div>
       ))}

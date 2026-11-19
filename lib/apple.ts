@@ -31,8 +31,16 @@ async function checkStoreInventory(
 
   return {
     store: store?.name ?? storeId,
-    silver: false,
-    spaceGray: false,
+
+    silver: {
+      status: "unknown",
+      message: "Inventory lookup not enabled yet",
+    },
+
+    spaceGray: {
+      status: "unknown",
+      message: "Inventory lookup not enabled yet",
+    },
   };
 }
 
