@@ -1,5 +1,8 @@
 import { DFW_STORES } from "./stores";
-import { StoreInventory } from "@/types/inventory";
+import {
+  StoreInventory,
+  ProductAvailability,
+} from "@/types/inventory";
 
 export interface InventoryResponse {
   updatedAt: string;
@@ -25,7 +28,7 @@ export const PRODUCTS = {
 async function checkProduct(
   storeNumber: string,
   sku: string
-) {
+): Promise<ProductAvailability> {
   try {
     const response = await fetch(
       `https://www.apple.com/shop/fulfillment-messages?fae=true&searchNearby=true&parts.0=${encodeURIComponent(
@@ -115,17 +118,15 @@ async function checkStoreInventory(
     );
   }
 
-  const [silver, spaceGray] =
-    await Promise.all([
-      checkProduct(
-        store.storeNumber,
-        PRODUCTS.silver.sku
-      ),
-      checkProduct(
-        store.storeNumber,
-        PRODUCTS.spaceGray.sku
-      ),
-    ]);
+  const silver = await checkProduct(
+    store.storeNumber,
+    PRODUCTS.silver.sku
+  );
+
+  const spaceGray = await checkProduct(
+    store.storeNumber,
+    PRODUCTS.spaceGray.sku
+  );
 
   return {
     store: store.name,
